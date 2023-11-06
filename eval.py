@@ -4,7 +4,6 @@ from .bleu.bleu import Bleu
 from .meteor.meteor import Meteor
 from .rouge.rouge import Rouge
 from .cider.cider import Cider
-from .spice.spice import Spice
 
 
 class COCOEvalCap:
@@ -16,7 +15,7 @@ class COCOEvalCap:
         self.cocoRes = cocoRes
         self.params = {'image_id': coco.getImgIds()}
 
-    def evaluate(self):
+    def evaluate(self, need_spice=False):
         imgIds = self.params['image_id']
         # imgIds = self.coco.getImgIds()
         gts = {}
@@ -42,8 +41,11 @@ class COCOEvalCap:
             (Meteor(),"METEOR"),
             (Rouge(), "ROUGE_L"),
             (Cider(), "CIDEr"),
-            (Spice(), "SPICE")
+            # (Spice(), "SPICE")
         ]
+        if need_spice:
+            from .spice.spice import Spice
+            scorers.append((Spice(), "SPICE"))
 
         # =================================================
         # Compute scores
