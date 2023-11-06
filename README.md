@@ -1,1 +1,1 @@
-it can choose no to calculate spice.
+it can choose not to calculate spice.
